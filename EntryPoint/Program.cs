@@ -35,37 +35,83 @@ namespace EntryPoint
           return;
       }
       goto read_input;
-    }
-            //Using the MergeSort structure
-            private static Vector2[] Mergesort(Vector2[] Vector2Array, int StartValue, int EndValue, Vector2 house)
+    }       
+        //Using the MergeSort structure
+        //Following slide 29 for example
+        private static Vector2[] Mergesort(Vector2[] Vector2Array, int StartValue, int EndValue, Vector2 house)
+        {
+            Vector2[] newarray = new Vector2[100];
+            if (StartValue < EndValue)
             {
-                Vector2[] newarray = new Vector2[100];
-                if (StartValue < EndValue)
+                int half = (StartValue + EndValue) / 2;
+                Mergesort(Vector2Array, StartValue, half, house);
+                Mergesort(Vector2Array, half + 1, EndValue, house);
+                newarray = Merge(Vector2Array, StartValue, half, EndValue, house);
+            }
+            return newarray;
+        }
+        //Working in progress
+        //following slide 35 for example
+        private static Vector2[] Merge(Vector2[] Vector2Array, int start, int half, int end, Vector2 house)
+        {
+            int leftArrayContent  = half - start + 1;
+            int rightArrayContent = end - half;
+
+            Vector2[] leftarray  = new Vector2[leftArrayContent + 1];
+            Vector2[] rightarray = new Vector2[rightArrayContent + 1];
+
+            int i = 0;
+            int j = 0;
+
+            for(i =0; i < leftArrayContent; i++ )
+            {
+                leftarray[i] = Vector2Array[start + i];
+            }
+            for(j = 0; j < rightArrayContent; j++)
+            {
+                rightarray[i] = Vector2Array[half + 1 + j];
+            }
+
+            // adding infinity integer for x and y?
+            leftarray[leftArrayContent] = new Vector2(float.MaxValue, float.MaxValue);
+            rightarray[rightArrayContent] = new Vector2(float.MaxValue, float.MaxValue);
+
+            i = 0;
+            j = 0;
+            double leftdifference  = EuclDistance(house, leftarray[i]);
+            double rightdifference = EuclDistance(house, rightarray[i]);
+
+            for(int k = start; k <= end; k++)
+            {
+                if( leftdifference <= rightdifference)
                 {
-                    int half = (StartValue + EndValue) / 2;
-                    Mergesort(Vector2Array, StartValue, half, house);
-                    Mergesort(Vector2Array, half + 1, EndValue, house);
-                    newarray = Merge(Vector2Array, StartValue, half, EndValue, house);
+                    Vector2Array[k] = leftarray[i];
+                    i++;
                 }
-                return newarray;
+                else
+                {
+                    Vector2Array[k] = rightarray[j];
+                    j++;
+                    rightdifference = EuclDistance(house, rightarray[j]);
+                } 
             }
-            //Working in progress
-            private static Vector2[] Merge(Vector2[] Vector2Array, int start, int half, int end, Vector2 house)
-            {
-            }
+            return Vector2Array;
+        }
+        //Work in progress defining the Euclidean Distance for this assignment
+        private static double EuclDistance(Vector2 specialbuilding, Vector2 house)
+        {
+            //float houseX = house.X;
+            //float houseY = house.Y;
+            //float buildingX = element.X;
+            //float buildingY = element.Y;      
+        }
 
             //Trying to read the values the values in vector2 and specialbuildings
             private static IEnumerable<Vector2> SortSpecialBuildingsByDistance(Vector2 house, IEnumerable<Vector2> specialBuildings)
             {
             int[] TestDistance = new int[100];
             foreach (Vector2 element in specialBuildings)
-            {
-
-                float houseX = house.X;
-                float houseY = house.Y;
-                float buildingX = element.X;
-                float buildingY = element.Y;
-
+            { 
                 Console.WriteLine(specialBuildings);
                 //double result;
                 //Console.WriteLine("houseY"+ "houseY");
