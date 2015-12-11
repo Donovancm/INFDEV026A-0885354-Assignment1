@@ -40,7 +40,7 @@ namespace EntryPoint
         //Following slide 29 for example
         private static Vector2[] Mergesort(Vector2[] Vector2Array, int StartValue, int EndValue, Vector2 house)
         {
-            Vector2[] newarray = new Vector2[100];
+            Vector2[] newarray = new Vector2[1];
             if (StartValue < EndValue)
             {
                 int half = (StartValue + EndValue) / 2;
@@ -69,7 +69,7 @@ namespace EntryPoint
             }
             for(j = 0; j < rightArrayContent; j++)
             {
-                rightarray[i] = Vector2Array[half + 1 + j];
+                rightarray[j] = Vector2Array[half + 1 + j];
             }
 
             // adding infinity integer for x and y?
@@ -79,7 +79,7 @@ namespace EntryPoint
             i = 0;
             j = 0;
             double leftdifference  = EuclDistance(house, leftarray[i]);
-            double rightdifference = EuclDistance(house, rightarray[i]);
+            double rightdifference = EuclDistance(house, rightarray[j]);
 
             for(int k = start; k <= end; k++)
             {
@@ -87,6 +87,7 @@ namespace EntryPoint
                 {
                     Vector2Array[k] = leftarray[i];
                     i++;
+                    leftdifference = EuclDistance(house, leftarray[i]);
                 }
                 else
                 {
@@ -96,39 +97,41 @@ namespace EntryPoint
                 } 
             }
             return Vector2Array;
+            
         }
-        //Work in progress defining the Euclidean Distance for this assignment
-        private static double EuclDistance(Vector2 specialbuilding, Vector2 house)
-        {
-            //float houseX = house.X;
-            //float houseY = house.Y;
-            //float buildingX = element.X;
-            //float buildingY = element.Y;      
-        }
-
             //Trying to read the values the values in vector2 and specialbuildings
             private static IEnumerable<Vector2> SortSpecialBuildingsByDistance(Vector2 house, IEnumerable<Vector2> specialBuildings)
             {
-            int[] TestDistance = new int[100];
-            foreach (Vector2 element in specialBuildings)
-            { 
+
                 Console.WriteLine(specialBuildings);
-                //double result;
+                Vector2[] specialbuildingsarray = specialBuildings.ToArray();
+                int first = 0;
+                int last = specialBuildings.Count() - 1;
+
+                Vector2[] sortedhouses = Mergesort(specialbuildingsarray, first, last, house);
+                return sortedhouses;
+                
                 //Console.WriteLine("houseY"+ "houseY");
                 //Console.WriteLine(houseX);
                 //result = Math.Round(Math.Sqrt(Math.Pow(houseX - buildingX, 2) + Math.Pow(houseY - buildingY, 2)));
                 //Console.WriteLine(result);
+                //return specialBuildings.OrderBy(v => Vector2.Distance(v, house));
+            }
+            //Work in progress defining the Euclidean Distance for this assignment
+            private static double EuclDistance(Vector2 specialbuilding, Vector2 house)
+            {
+                float deltaX = house.X - specialbuilding.X;
+                float deltaY = house.Y - specialbuilding.Y;
+                float result = (deltaX * deltaX) + (deltaY * deltaY);
+              
+                //double result = Math.Round(Math.Sqrt(Math.Pow(houseX - buildingX) 2) + Math.Pow(houseY - buildingY, 2)));
+                return result;
+                //float buildingX = element.X;
+                //float buildingY = element.Y;      
             }
 
 
-
-                return specialBuildings.OrderBy(v => Vector2.Distance(v, house));
-            }
-        
-
-    private static IEnumerable<IEnumerable<Vector2>> FindSpecialBuildingsWithinDistanceFromHouse(
-      IEnumerable<Vector2> specialBuildings, 
-      IEnumerable<Tuple<Vector2, float>> housesAndDistances)
+        private static IEnumerable<IEnumerable<Vector2>> FindSpecialBuildingsWithinDistanceFromHouse(IEnumerable<Vector2> specialBuildings, IEnumerable<Tuple<Vector2, float>> housesAndDistances)
     {
       return
           from h in housesAndDistances
