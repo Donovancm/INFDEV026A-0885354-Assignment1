@@ -36,6 +36,8 @@ namespace EntryPoint
       }
       goto read_input;
     }       
+
+                                                    //Assignment1\\
         //Using the MergeSort structure
         //Following slide 29 for example
         private static Vector2[] Mergesort(Vector2[] Vector2Array, int StartValue, int EndValue, Vector2 house)
@@ -130,7 +132,8 @@ namespace EntryPoint
                 //float buildingY = element.Y;      
             }
 
-
+                                                    //Assignment 1\\
+                                                    //Assignment 2\\
         private static IEnumerable<IEnumerable<Vector2>> FindSpecialBuildingsWithinDistanceFromHouse(IEnumerable<Vector2> specialBuildings, IEnumerable<Tuple<Vector2, float>> housesAndDistances)
     {
       return
@@ -141,6 +144,8 @@ namespace EntryPoint
             select s;
     }
 
+                                                    //Assignment 2\\
+                                                    //Assignment 3\\
     private static IEnumerable<Tuple<Vector2, Vector2>> FindRoute(Vector2 startingBuilding, 
       Vector2 destinationBuilding, IEnumerable<Tuple<Vector2, Vector2>> roads)
     {
@@ -154,7 +159,7 @@ namespace EntryPoint
       }
       return fakeBestPath;
     }
-
+                                                    //Assignment 3\\
     private static IEnumerable<IEnumerable<Tuple<Vector2, Vector2>>> FindRoutesToAll(Vector2 startingBuilding, 
       IEnumerable<Vector2> destinationBuildings, IEnumerable<Tuple<Vector2, Vector2>> roads)
     {
