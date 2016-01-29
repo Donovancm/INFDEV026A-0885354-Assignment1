@@ -134,16 +134,25 @@ namespace EntryPoint
 
                                                     //Assignment 1\\
                                                     //Assignment 2\\
-        private static IEnumerable<IEnumerable<Vector2>> FindSpecialBuildingsWithinDistanceFromHouse(IEnumerable<Vector2> specialBuildings, IEnumerable<Tuple<Vector2, float>> housesAndDistances)
-    {
-      return
-          from h in housesAndDistances
-          select
-            from s in specialBuildings
-            where Vector2.Distance(h.Item1, s) <= h.Item2
-            select s;
-    }
+                                                                                        
 
+        private static IEnumerable<IEnumerable<Vector2>> FindSpecialBuildingsWithinDistanceFromHouse(IEnumerable<Vector2> specialBuildings, IEnumerable<Tuple<Vector2, float>> housesAndDistances)
+        {
+                Console.WriteLine(housesAndDistances);
+          return
+              from h in housesAndDistances
+              select
+                from s in specialBuildings
+                where Vector2.Distance(h.Item1, s) <= h.Item2
+                select s;
+        }
+        private class Node<T>
+        {
+            public bool isEmpty { get; set; }
+            public Vector2 vector2 { get; set; }
+            public Node<T> Left { get; set; }
+            public Node<T> Right { get; set; }
+        }
                                                     //Assignment 2\\
                                                     //Assignment 3\\
     private static IEnumerable<Tuple<Vector2, Vector2>> FindRoute(Vector2 startingBuilding, 
