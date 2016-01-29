@@ -40,8 +40,9 @@ namespace EntryPoint
             //Sorting on depth = x
             if (depth % 2 == 0)
             {
+                //Element in middle
                 elements = elements.OrderBy(n => n.X).ToList();
-                var middle = elements[elements.Count / 2]; // Middle Element of list
+                var middle = elements[elements.Count / 2]; 
                 elements.Remove(middle);
                 foreach (var item in elements)
                 {
