@@ -119,7 +119,7 @@ namespace EntryPoint
                 //Console.WriteLine(result);
                 //return specialBuildings.OrderBy(v => Vector2.Distance(v, house));
             }
-            //Work in progress defining the Euclidean Distance for this assignment
+            //Defining the Euclidean Distance for this assignment
             private static double EuclDistance(Vector2 specialbuilding, Vector2 house)
             {
                 float deltaX = house.X - specialbuilding.X;
@@ -138,21 +138,32 @@ namespace EntryPoint
 
         private static IEnumerable<IEnumerable<Vector2>> FindSpecialBuildingsWithinDistanceFromHouse(IEnumerable<Vector2> specialBuildings, IEnumerable<Tuple<Vector2, float>> housesAndDistances)
         {
-                Console.WriteLine(housesAndDistances);
-          return
-              from h in housesAndDistances
-              select
-                from s in specialBuildings
-                where Vector2.Distance(h.Item1, s) <= h.Item2
-                select s;
+            List<List<Vector2>> specialBuildingsInRange = new List<List<Vector2>>();
+            List<Vector2> specialBuildingsInCircle = new List<Vector2>();
+            List<Tuple<Vector2, float>> buildingList = housesAndDistances.ToList();
+
+            var tree = new Tree();
+            var create = tree.CreateTree(specialBuildings.ToList(), 0);
+
+            foreach (var building in buildingList)
+            {
+                tree.RangeSearch(building.Item1, create, building.Item2, 0);
+
+                foreach (var x in tree.specialBuildingsInRange)
+                {
+                    if (Vector2.Distance(building.Item1, x) <= building.Item2)
+                    {
+                        specialBuildingsInCircle.Add(x);
+                        
+                    }
+                }
+            }
+
+            specialBuildingsInRange.Add(specialBuildingsInCircle);
+
+            return specialBuildingsInRange;
         }
-        private class Node<T>
-        {
-            public bool isEmpty { get; set; }
-            public Vector2 vector2 { get; set; }
-            public Node<T> Left { get; set; }
-            public Node<T> Right { get; set; }
-        }
+        
                                                     //Assignment 2\\
                                                     //Assignment 3\\
     private static IEnumerable<Tuple<Vector2, Vector2>> FindRoute(Vector2 startingBuilding, 
